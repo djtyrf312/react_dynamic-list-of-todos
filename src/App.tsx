@@ -32,7 +32,8 @@ export const App: React.FC = () => {
 
   if (query) {
     displayedTodos = displayedTodos.filter(todo =>
-      todo.title.toLowerCase().includes(query.toLowerCase()));
+      todo.title.toLowerCase().includes(query.toLowerCase()),
+    );
   }
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export const App: React.FC = () => {
                 <TodoList
                   todos={displayedTodos}
                   onClickedPreview={setIsOpenedTodo}
+                  isOpenedTodo={isOpenedTodo}
                 />
               )}
             </div>
