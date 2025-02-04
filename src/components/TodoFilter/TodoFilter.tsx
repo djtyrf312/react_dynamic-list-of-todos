@@ -2,7 +2,6 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { Status } from '../../App';
 
 type Props = {
-  status: Status;
   query: string;
   onStatusChange: Dispatch<SetStateAction<Status>>;
   onQueryChange: Dispatch<SetStateAction<string>>;

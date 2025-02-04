@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { Loader } from '../Loader';
 import { Todo } from '../../types/Todo';
 import { getUser } from '../../api';
@@ -11,13 +11,15 @@ type Props = {
 };
 
 export const TodoModal: FC<Props> = ({ todo, onClosedPreview }) => {
-  const [user, setUser] = React.useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const { id, title, completed, userId } = todo;
+  const { name, email } = user || {};
 
   useEffect(() => {
-    getUser(todo.userId).then(data => {
+    getUser(userId).then(data => {
       setUser(data);
     });
-  }, [todo.userId]);
+  }, [userId]);
 
   return (
     <div className="modal is-active" data-cy="modal">
@@ -32,7 +34,7 @@ export const TodoModal: FC<Props> = ({ todo, onClosedPreview }) => {
               className="modal-card-title has-text-weight-medium"
               data-cy="modal-header"
             >
-              Todo #{todo.id}
+              Todo #{id}
             </div>
 
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
@@ -48,23 +50,23 @@ export const TodoModal: FC<Props> = ({ todo, onClosedPreview }) => {
 
           <div className="modal-card-body">
             <p className="block" data-cy="modal-title">
-              {todo.title}
+              {title}
             </p>
 
             <p className="block" data-cy="modal-user">
               {/* <strong className="has-text-success">Done</strong> */}
               <strong
                 className={classNames({
-                  'has-text-success': todo.completed,
-                  'has-text-danger': !todo.completed,
+                  'has-text-success': completed,
+                  'has-text-danger': !completed,
                 })}
               >
-                {todo.completed ? 'Done' : 'Planned'}
+                {completed ? 'Done' : 'Planned'}
               </strong>
 
               {' by '}
 
-              <a href={`mailto:${user.email}`}>{user.name}</a>
+              <a href={`mailto:${email}`}>{name}</a>
             </p>
           </div>
         </div>

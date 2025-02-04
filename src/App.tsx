@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -15,11 +15,11 @@ export enum Status {
   completed = 'completed',
 }
 
-export const App: React.FC = () => {
-  const [status, setStatus] = React.useState<Status>(Status.all);
-  const [query, setQuery] = React.useState<string>('');
-  const [todosFromServer, setTodosFromServer] = React.useState<Todo[]>([]);
-  const [isOpenedTodo, setIsOpenedTodo] = React.useState<Todo | null>(null);
+export const App: FC = () => {
+  const [status, setStatus] = useState<Status>(Status.all);
+  const [query, setQuery] = useState<string>('');
+  const [todosFromServer, setTodosFromServer] = useState<Todo[]>([]);
+  const [isOpenedTodo, setIsOpenedTodo] = useState<Todo | null>(null);
   let displayedTodos = [...todosFromServer];
 
   if (status === Status.active) {
@@ -52,7 +52,6 @@ export const App: React.FC = () => {
             <div className="block">
               <TodoFilter
                 onStatusChange={setStatus}
-                status={status}
                 onQueryChange={setQuery}
                 query={query}
               />
